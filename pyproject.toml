@@ -1,0 +1,17 @@
+[project]
+name = "gitdigger"
+version = "0.1.0"
+description = "A PDF-to-GitHub API that extracts company names from uploaded PDFs using LLM, then fetches their GitHub organization data and stores everything in a database"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "db-sqlite3>=0.0.1",
+    "dotenv>=0.9.9",
+    "fastapi>=0.115.14",
+    "httpx>=0.28.1",
+    "pdfplumber>=0.11.7",
+    "pydantic>=2.11.7",
+    "python-dotenv>=1.1.1",
+    "requests>=2.32.4",
+    "uvicorn[standard]>=0.35.0",
+]
