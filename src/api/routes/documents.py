@@ -10,7 +10,7 @@ import time
 import json
 from typing import List, Optional, Dict, Any
 
-from src.models.schema import Job, GitHubMember
+from src.models.database import Job, GitHubMember
 from src.models.database import get_db
 from src.services.pdf_service import PDFService
 from src.services.llm_service import github_name_extractor

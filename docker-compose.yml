@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  gitdigger:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GITHUB_ACCESS_TOKEN=${GITHUB_ACCESS_TOKEN}
+    volumes:
+      - ./uploaded_files:/app/uploaded_files
+      - ./data:/app/data  # Changed to a data directory
+    restart: unless-stopped
