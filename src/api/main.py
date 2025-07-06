@@ -24,4 +24,4 @@ app.include_router(documents.router, prefix="/api/documents", tags=["documents"]
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "timestamp": datetime.now()} # type: ignore
+    return {"status": "healthy"} # type: ignore
