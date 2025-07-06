@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.api.routes import documents
+import datetime
 
 
 app = FastAPI(
@@ -21,4 +22,6 @@ app.add_middleware(
 
 app.include_router(documents.router, prefix="/api/documents", tags=["documents"])
 
-
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": datetime.now()} # type: ignore
