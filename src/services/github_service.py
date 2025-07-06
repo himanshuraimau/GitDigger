@@ -1,18 +1,18 @@
-import os
 import requests
 import time
 from typing import Dict, List, Optional
 import dotenv
+from src.config.config import GITHUB_API_URL, GITHUB_ACCESS_TOKEN
 
 dotenv.load_dotenv()
 
 class GitHubService:
     def __init__(self, access_token: str = None): # type: ignore
-        self.access_token = access_token or os.getenv('GITHUB_ACCESS_TOKEN')
+        self.access_token = access_token or GITHUB_ACCESS_TOKEN
         if not self.access_token:
             raise ValueError("GitHub access token required")
         
-        self.base_url = "https://api.github.com"
+        self.base_url = GITHUB_API_URL
         self.headers = {
             'Authorization': f'Bearer {self.access_token}',
             'Accept': 'application/vnd.github.v3+json'
@@ -102,19 +102,3 @@ class GitHubService:
             'github_members': members,
             'organization_info': org_info
         }
-
-# Example usage for the project
-if __name__ == "__main__":
-    service = GitHubService()
-    
-    
-    result = service.get_organization_data("microsoft")
-    
-    print(f"Success: {result['success']}")
-    print(f"Company: {result['company_name']}")
-    print(f"Members found: {len(result['github_members'])}")
-    
-    if result['success']:
-        print("First 3 members:")
-        for member in result['github_members'][:3]:
-            print(f"  - {member['login']}")

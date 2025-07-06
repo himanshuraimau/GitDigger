@@ -115,23 +115,3 @@ class PDFService:
         except Exception as e:
             logger.error(f"Failed to get PDF info: {e}")
             return {}
-
-
-# if __name__ == "__main__":
-#     pdf_service = PDFService()
-#     pdf_path = "/home/himanshu/Downloads/pnb.pdf"  
-    
-#     text = pdf_service.extract_text(pdf_path)
-#     print(f"First 500 chars: {text[:500]}...")  # Just show a preview
-    
-#     pages = pdf_service.extract_text_by_pages(pdf_path)
-#     print(f"Got text from {len(pages)} pages")
-    
-#     content = pdf_service.extract_content(pdf_path, extract_images=True, extract_tables=True)
-#     print(f"Extracted content from {len(content)} pages")
-    
-#     metadata = pdf_service.extract_metadata(pdf_path)
-#     print(f"PDF metadata: {metadata}")
-    
-#     info = pdf_service.get_pdf_info(pdf_path)
-#     print(f"PDF info: {info}")
