@@ -32,8 +32,8 @@ class StatusResponse(BaseModel):
     job_id: str
     status: str
     company_name: Optional[str] = None
-    github_members: Optional[List[MemberResponse]] = None
     num_members: Optional[int] = None
+    github_members: Optional[List[MemberResponse]] = None
     error_message: Optional[str] = None
 
 
