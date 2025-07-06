@@ -18,7 +18,7 @@ A simple API service to upload PDF documents, extract company information using 
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/himanshuraimau/GitDigger.git
 cd GitDigger
 
 # Install dependencies
