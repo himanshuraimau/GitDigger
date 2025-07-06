@@ -20,7 +20,7 @@ RUN uv sync --frozen
 
 # Copy source code
 COPY src/ ./src/
-COPY .env.example .env
+COPY .env .env
 
 # Create necessary directories for uploads and database
 RUN mkdir -p uploaded_files data
