@@ -142,25 +142,23 @@ def process_pdf(job_id: str, pdf_path: str):
         
         try:
             github_service = GitHubService()
-            org_data = github_service.get_organization(org_name)
-            
-            if not org_data:
+            org_data = github_service.get_organization_data(org_name, max_members=1000)
+            if not org_data["success"]:
                 job = db.query(Job).filter(Job.job_id == job_id).first()
                 if job:
                     job.status = "failed" # type: ignore
                     job.error_message = f"Organization '{org_name}' not found on GitHub" # type: ignore
-                    job.completed_at = datetime.datetime.now() # type: ignore
+                    job.completed_at = datetime.datetime.now()  # type: ignore
                     db.commit()
                 return
-                
-            members = github_service.get_organization_members(org_name)
-            
+            members = org_data["github_members"]
+            num_members = org_data.get("num_members", len(members))
             job = db.query(Job).filter(Job.job_id == job_id).first()
             if job:
                 job.company_name = org_name # type: ignore
-                job.status = "completed" # type: ignore
-                job.completed_at = datetime.datetime.now() # type: ignore
-                
+                job.status = "completed"    # type: ignore
+                job.completed_at = datetime.datetime.now()  # type: ignore
+                job.num_members = num_members
                 for member in members:
                     db_member = GitHubMember(
                         job_id=job_id,
@@ -170,15 +168,13 @@ def process_pdf(job_id: str, pdf_path: str):
                         member_type=member.get('type', '')
                     )
                     db.add(db_member)
-                    
                 db.commit()
-            
         except Exception as e:
             job = db.query(Job).filter(Job.job_id == job_id).first()
             if job:
-                job.status = "failed" # type: ignore
+                job.status = "failed"   # type: ignore
                 job.error_message = str(e) # type: ignore
-                job.completed_at = datetime.datetime.now() # type: ignore
+                job.completed_at = datetime.datetime.now()   # type: ignore
                 db.commit()
             
     except Exception as e:

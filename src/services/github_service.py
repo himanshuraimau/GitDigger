@@ -54,51 +54,47 @@ class GitHubService:
             'description': data.get('description')
         }
     
-    def get_organization_members(self, org_name: str) -> List[Dict]:
+    def get_organization_members(self, org_name: str, max_members: int = 1000) -> List[Dict]:
         url = f"{self.base_url}/orgs/{org_name}/public_members"
         members = []
         page = 1
-        
+        fetched = 0
+        per_page = 100
         while True:
-            params = {'page': page, 'per_page': 100}
+            params = {'page': page, 'per_page': per_page}
             data = self._make_request(url, params)
-            
             if not data:
                 break
-                
-            if not data:  
-                break
-                
             for member in data:
+                if fetched >= max_members:
+                    return members
                 members.append({
                     'login': member.get('login'),
                     'avatar_url': member.get('avatar_url'),
                     'html_url': member.get('html_url'),
                     'type': member.get('type')
                 })
-            
-            if len(data) < 100:
+                fetched += 1
+            if len(data) < per_page or fetched >= max_members:
                 break
-                
             page += 1
-        
         return members
     
-    def get_organization_data(self, org_name: str) -> Dict:
+    def get_organization_data(self, org_name: str, max_members: int = 1000) -> Dict:
         org_info = self.get_organization(org_name)
         if not org_info:
             return {
                 'success': False,
                 'company_name': None,
                 'github_members': [],
+                'num_members': 0,
                 'error': 'Organization not found'
             }
-        
-        members = self.get_organization_members(org_name)
-        
+        members = self.get_organization_members(org_name, max_members=max_members)
         return {
             'success': True,
             'company_name': org_info['name'] or org_info['login'],
             'github_members': members,
+            'num_members': len(members),
             'organization_info': org_info
         }

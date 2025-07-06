@@ -16,4 +16,4 @@ GITHUB_API_URL = "https://api.github.com"
 GITHUB_ACCESS_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN", "")
 
 # Simulate long-running process with delays
-SIMULATION_DELAY = 5  # seconds
+SIMULATION_DELAY = 30  # seconds

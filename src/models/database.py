@@ -28,6 +28,7 @@ class Job(Base):
     error_message = Column(Text)
     
     members = relationship("GitHubMember", back_populates="job", cascade="all, delete-orphan")
+    num_members = Column(Integer, default=0)  # New column for number of members
     
     def __repr__(self):
         return f"<Job(job_id='{self.job_id}', status='{self.status}', company_name='{self.company_name}')>"
