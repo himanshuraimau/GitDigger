@@ -68,7 +68,7 @@ def github_name_extractor(pdf_text: str) -> List[str]:
         
         print("Extracting GitHub usernames...")
         response = client.models.generate_content(
-            model="gemini-2.5-pro",  
+            model="gemini-2.5-flash",  
             contents=prompt,
             config=config if USE_GROUNDING else None
         )

@@ -44,11 +44,12 @@ class GitHubMember(Base):
     avatar_url = Column(String)
     html_url = Column(String)
     member_type = Column(String)
+    organization = Column(String, nullable=False)  # New column for organization name
     
     job = relationship("Job", back_populates="members")
     
     def __repr__(self):
-        return f"<GitHubMember(id={self.id}, login='{self.login}', job_id='{self.job_id}')>"
+        return f"<GitHubMember(id={self.id}, login='{self.login}', organization='{self.organization}', job_id='{self.job_id}')>"
 
 
 def create_tables():
